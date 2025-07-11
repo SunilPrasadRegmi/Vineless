@@ -173,7 +173,7 @@ clear.addEventListener('click', async function() {
 async function createCommand(json, key_string) {
     const metadata = JSON.parse(json);
     const header_string = Object.entries(metadata.headers).map(([key, value]) => `-H "${key}: ${value.replace(/"/g, "'")}"`).join(' ');
-    return `${await SettingsManager.getExecutableName()} "${metadata.url}" ${header_string} ${key_string} ${await SettingsManager.getUseShakaPackager() ? "--use-shaka-packager " : ""}-M format=mkv`;
+    return `${await SettingsManager.getExecutableName()} "${metadata.url}" ${header_string} ${key_string} ${await SettingsManager.getUseShakaPackager() ? "--use-shaka-packager " : ""}--write-meta-json false --thread-count 64 --no-log true --no-date-info true --select-video best --select-audio all --select-subtitle all --mux-after-done format=mkv:muxer=mkvmerge --save-name ""`;
 }
 
 async function appendLog(result) {
